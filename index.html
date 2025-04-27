@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://unpkg.com/topojson@3"></script>
+        
+        <!-- import D3 Version 6 here or at the end of the body -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.7.0/d3.min.js"></script>
+
+        <!-- load our custom D3 code (must happen after D3 is loaded) -->
+        <script src="./graph.js"></script>
+
+    </head>
+    <body>
+        <div style = "padding-left: 50px;"> 
+            <h1> The Unexpected Dangers of Driving </h1>
+        </div>
+        
+        <div style = "display: flex; margin-left: 20px;">
+            <div>
+                <div style = "justify-items: center;">
+                    <h3> Number of Crashes </h3>
+                </div>
+                <div>
+                    <svg id="graphs" width="600" height="425"></svg>
+                </div>
+            </div>
+            <div> 
+                <div style = "justify-items: center;">
+                    <h3> Dangerous Influences </h3>
+                </div>
+                <div>
+                    <svg id="graphs2" width="600" height="425"></svg>
+                </div>
+            </div>
+
+            
+        </div>
+        <div style = "margin-left: 50px;"> 
+            <label for = "year-select"> Select Year: </label>
+            <select id = "year-select"> </select>
+        </div>
+        <div id="barchart_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
+        <div id="linegraph_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
+    </body>
+</html>
