@@ -1,7 +1,15 @@
 (function() { 
     d3.csv("./collision_crash_2019_2023.csv").then((data) => { 
         const sortedDataByMonth = new Map();
+        // finds all unique values for years (available years)
+            // data.map() returns array of all year values
+            // new Set() returns set of unique values
+            // Array.from() returns array (converts set to array)
         const availableYears = Array.from(new Set(data.map(d => +d.crash_year)))
+        // Using availableYears create a dropdown for users to select year
+            // Selects the <select> element in the html
+            // Adds values to the <options> element using the availableYears
+            // Make the current state of the dropdown the selectedYear
         const dropdown = d3.select("#year-select")
         dropdown.selectAll("option")
             .data(availableYears)
@@ -147,7 +155,7 @@
             if ((+row.vehicle_failure > 0)&&(+row.injury > 0)){
                 entry.vehicle_failure_injuries += +row.injury
             }
-            if ((+row.fatigue_asleep > 0)&&(+row.injuryinjury > 0)){
+            if ((+row.fatigue_asleep > 0)&&(+row.injury > 0)){
                 entry.fatigue_injuries += +row.injury
             }
             if ((+row.running_red_lt> 0)&&(+row.injury > 0)){
@@ -312,9 +320,9 @@
                         .html(`<strong>${d.charAt(0).toUpperCase() + d.slice(1)}</strong><br/>
                             Count: ${yearTotals[d]}<br/>
                             Deaths: ${yearTotalDeaths[d + "_deaths"]}<br/>
-                            Death Percentage: ${((yearTotalDeaths[d + "_deaths"]/yearTotals[d])*100).toFixed(2)}<br/>
+                            Death Percentage: ${((yearTotalDeaths[d + "_deaths"]/yearTotals[d])*100).toFixed(2)}%<br/>
                             Injury: ${yearTotalInjuries[d + "_injuries"]}<br/>
-                            Injury Percentage: ${((yearTotalInjuries[d + "_injuries"]/yearTotals[d])*100).toFixed(2)}<br/>
+                            Injury Percentage: ${((yearTotalInjuries[d + "_injuries"]/yearTotals[d])*100).toFixed(2)}%<br/>
                             `);
                             
                 }) 
@@ -369,9 +377,9 @@
                                     .html(`<strong>${d.charAt(0).toUpperCase() + d.slice(1)}</strong><br/>
                                         Count: ${inputData[d]}<br/>
                                         Deaths: ${inputData[d + "_deaths"]}<br/>
-                                        Death Percentage: ${((yearTotalDeaths[d + "_deaths"]/yearTotals[d])*100).toFixed(2)}
-                                        Injury: ${yearTotalInjuries[d + "_injuries"]}<br/>
-                                        Injury Percentage: ${((yearTotalInjuries[d + "_injuries"]/yearTotals[d])*100).toFixed(2)}<br/>
+                                        Death Percentage: ${((inputData[d + "_deaths"]/inputData[d])*100).toFixed(2)}%<br/>
+                                        Injury: ${inputData[d + "_injuries"]}<br/>
+                                        Injury Percentage: ${((inputData[d + "_injuries"]/inputData[d])*100).toFixed(2)}%<br/>
                                         `);
 
                             })
