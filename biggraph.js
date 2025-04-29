@@ -1,6 +1,4 @@
-// Load CSV data
 d3.csv("./collision_crash_2019_2023.csv").then((data) => {
-    // Prepare 4-hour intervals with AM/PM labels
     const intervals = [
         { range: "12am-4am", count: 0 },
         { range: "4am-8am", count: 0 },
@@ -10,9 +8,8 @@ d3.csv("./collision_crash_2019_2023.csv").then((data) => {
         { range: "8pm-12am", count: 0 }
     ];
 
-    // Count how many fall into each 4-hour bin
     data.forEach(d => {
-        const hour = +d.time_of_day; // Convert to number
+        const hour = +d.time_of_day; 
         if (hour >= 0 && hour < 4) intervals[0].count++;
         else if (hour >= 4 && hour < 8) intervals[1].count++;
         else if (hour >= 8 && hour < 12) intervals[2].count++;
@@ -43,7 +40,7 @@ d3.csv("./collision_crash_2019_2023.csv").then((data) => {
         .style("pointer-events", "none")
         .style("opacity", 0);
 
-    // Scales
+    // scales
     const x = d3.scaleBand()
         .domain(intervals.map(d => d.range))
         .range([0, chartWidth])
@@ -53,7 +50,7 @@ d3.csv("./collision_crash_2019_2023.csv").then((data) => {
         .domain([0, d3.max(intervals, d => d.count)]).nice()
         .range([chartHeight, 0]);
 
-    // X Axis
+    // x Axis
     g.append("g")
         .attr("transform", `translate(0,${chartHeight})`)
         .call(d3.axisBottom(x))
@@ -61,11 +58,11 @@ d3.csv("./collision_crash_2019_2023.csv").then((data) => {
             .attr("transform", "rotate(-40)")
             .style("text-anchor", "end");
 
-    // Y Axis
+    // y Axis
     g.append("g")
         .call(d3.axisLeft(y));
 
-    // Bars with hover
+    // bars with hover
     g.selectAll(".bar")
         .data(intervals)
         .enter().append("rect")
