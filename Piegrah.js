@@ -1,5 +1,4 @@
 d3.csv("./collision_crash_2019_2023.csv").then((data) => {
-    // Prepare 4-hour intervals with AM/PM labels
     const intervals = [
         { range: "12am-4am", count: 0 },
         { range: "4am-8am", count: 0 },
@@ -23,7 +22,6 @@ d3.csv("./collision_crash_2019_2023.csv").then((data) => {
     // Calculate total crashes
     const totalCrashes = d3.sum(intervals, d => d.count);
 
-    // Set up SVG and dimensions
     const width = 500, height = 500, margin = 50;
     const radius = Math.min(width, height) / 2 - margin;
 
@@ -51,7 +49,6 @@ d3.csv("./collision_crash_2019_2023.csv").then((data) => {
         .innerRadius(0)
         .outerRadius(radius);
 
-    // Tooltip
     const tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("position", "absolute")
