@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head> 
+        <style>
+            .tooltip {
+    font-family: sans-serif;
+    font-size: 13px;
+}
+        </style>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <script src="https://unpkg.com/topojson@3"></script>
@@ -10,6 +16,8 @@
 
         <!-- load our custom D3 code (must happen after D3 is loaded) -->
         <script src="./graph.js"></script>
+        <script src="./biggraph.js"></script>
+        <script src="./Piegrah.js"></script>
 
     </head>
     <body>
@@ -24,6 +32,7 @@
                 </div>
                 <div>
                     <svg id="graphs" width="600" height="425"></svg>
+
                 </div>
             </div>
             <div> 
@@ -43,5 +52,10 @@
         </div>
         <div id="barchart_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
         <div id="linegraph_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
+ <h2>Crashes Time Interval</h2>
+        <svg id="graph" width="600" height="425"></svg>
+        <svg id="piegraph" width="600" height="600"></svg>
+
+ 
     </body>
 </html>
