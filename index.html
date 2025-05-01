@@ -1,61 +1,53 @@
 <!DOCTYPE html>
 <html>
-    <head> 
-        <style>
-            .tooltip {
-    font-family: sans-serif;
-    font-size: 13px;
-}
-        </style>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <title>Philly Collision Heatmap</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script src="https://unpkg.com/topojson@3"></script>
-        
-        <!-- import D3 Version 6 here or at the end of the body -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.7.0/d3.min.js"></script>
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-        <!-- load our custom D3 code (must happen after D3 is loaded) -->
-        <script src="./graph.js"></script>
-        <script src="./biggraph.js"></script>
-        <script src="./Piegrah.js"></script>
+  <!-- Heatmap plugin -->
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
 
-    </head>
-    <body>
-        <div style = "padding-left: 50px;"> 
-            <h1> The Unexpected Dangers of Driving </h1>
-        </div>
-        
-        <div style = "display: flex; margin-left: 20px;">
-            <div>
-                <div style = "justify-items: center;">
-                    <h3> Number of Crashes </h3>
-                </div>
-                <div>
-                    <svg id="graphs" width="600" height="425"></svg>
+  <style>
+    #map {
+      height: 90vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h2>Philadelphia Collision Heatmap (2019–2023)</h2>
+  <div id="map"></div>
 
-                </div>
-            </div>
-            <div> 
-                <div style = "justify-items: center;">
-                    <h3> Dangerous Influences </h3>
-                </div>
-                <div>
-                    <svg id="graphs2" width="600" height="425"></svg>
-                </div>
-            </div>
+  <script>
+    // Initialize map
+    var map = L.map('map').setView([39.9526, -75.1652], 12); // Philly center
 
-            
-        </div>
-        <div style = "margin-left: 50px;"> 
-            <label for = "year-select"> Select Year: </label>
-            <select id = "year-select"> </select>
-        </div>
-        <div id="barchart_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
-        <div id="linegraph_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
- <h2>Crashes Time Interval</h2>
-        <svg id="graph" width="600" height="425"></svg>
-        <svg id="piegraph" width="600" height="600"></svg>
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
- 
-    </body>
+    // Load heatmap data
+    fetch('heatmap_latlng.csv')
+      .then(res => res.text())
+      .then(csvText => {
+        const points = [];
+        const rows = csvText.split("\n").slice(1);
+        rows.forEach(row => {
+          const [lng, lat] = row.split(",");
+          if (!isNaN(lat) && !isNaN(lng)) {
+            points.push([+lat, +lng, 0.5]); // Lat, Lng, Intensity
+          }
+        });
+
+        // Add heat layer
+        L.heatLayer(points, { radius: 25 }).addTo(map);
+      });
+  </script>
+</body>
 </html>
