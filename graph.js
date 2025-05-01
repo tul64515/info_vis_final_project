@@ -330,8 +330,8 @@
                             
                 }) 
                 .on("mousemove", function(event) {
-                    barchart_tooltip.style("left", (event.pageX + 10) + "px")
-                        .style("top", (event.pageY - 20) + "px");
+                    barchart_tooltip.style("left", (event.pageX - 150) + "px")
+                        .style("top", (event.pageY - 75) + "px");
                 })
                 .on("mouseout", function() {
                     barchart_tooltip.style("display", "none");
