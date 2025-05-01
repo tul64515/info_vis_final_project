@@ -239,7 +239,7 @@
                 .join("circle")
                 .attr("cx", d=>linegraphX(d.date))
                 .attr("cy", d=>linegraphY(d.count))
-                .attr("r", 8)
+                .attr("r", 10)
                 .attr("fill", "steelblue")
                 .on("click", function(event, d){
                     updateBarChart(d);
@@ -250,7 +250,8 @@
                             Fatal: ${d.fatal} <br/>
                             Injury: ${d.injury}`)
                     d3.select(this)
-                        .style("stroke", "black");
+                        .style("stroke", "black")
+                        .style("fill", "red");
                 })
                 .on("mousemove", function(event){
                     linegraph_tooltip.style("left", (event.pageX + 10) + "px")
@@ -260,6 +261,7 @@
                     linegraph_tooltip.style("display", "none");
                     d3.select(this)
                         .style("stroke", "none")
+                        .style("fill", "steelblue")
                 })
 
             // x axis
@@ -316,6 +318,7 @@
                 .on('mouseover', (event, d) => {
                     d3.select(event.currentTarget)
                         .style("stroke", "black")
+                        .style("fill", "red")
                     barchart_tooltip.style("display", "block")
                         .html(`<strong>${d.charAt(0).toUpperCase() + d.slice(1)}</strong><br/>
                             Count: ${yearTotals[d]}<br/>
@@ -334,6 +337,7 @@
                     barchart_tooltip.style("display", "none");
                     d3.select(this)
                         .style("stroke", "none")
+                        .style("fill", "steelblue")
                 })
             // x axis
             bar_svg.append("g")
@@ -356,7 +360,7 @@
                         const categories = ["aggressive", "alcohol", "phone", "distracted", "drug", "vehicle_failure", "fatigue", "run_red", "run_stop", "speeding", "tailgating"]
                         
                         const yMax = d3.max(categories, cat => inputData[cat]);
-                        barchartY.domain([0, 400]).nice();
+                        barchartY.domain([0, 350]).nice();
 
                         barYAxis
                             .call(d3.axisLeft(barchartY))
