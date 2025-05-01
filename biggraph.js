@@ -1,9 +1,9 @@
 d3.csv("./collision_crash_2019_2023.csv").then((data) => {
-    data.forEach(d => {
-        d.crash_year = +d.crash_year;
-        d.time_of_day = Math.floor(+d.time_of_day / 100); /
-    });
-    
+   data.forEach(d => {
+    d.crash_year = +d.crash_year;
+    d.time_of_day = Math.floor(+d.time_of_day / 100); 
+});
+
 
     const years = [...new Set(data.map(d => d.crash_year))].sort();
     
