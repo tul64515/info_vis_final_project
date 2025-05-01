@@ -251,7 +251,7 @@
                             Injury: ${d.injury}`)
                     d3.select(this)
                         .style("stroke", "black")
-                        .style("fill", "red");
+                        .style("fill", "blue");
                 })
                 .on("mousemove", function(event){
                     linegraph_tooltip.style("left", (event.pageX + 10) + "px")
@@ -318,7 +318,7 @@
                 .on('mouseover', (event, d) => {
                     d3.select(event.currentTarget)
                         .style("stroke", "black")
-                        .style("fill", "red")
+                        .style("fill", "blue")
                     barchart_tooltip.style("display", "block")
                         .html(`<strong>${d.charAt(0).toUpperCase() + d.slice(1)}</strong><br/>
                             Count: ${yearTotals[d]}<br/>
