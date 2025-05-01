@@ -20,85 +20,68 @@
 
     <style>
       #map {
-        height: 60vh;
-        width: 80%;
+        height: 40vh;
+        width: 60vh;
       }
     </style>
   </head>
   <body>
-    <div>
-      <h2>Philadelphia Collision Heatmap (2019–2023)</h2>
-      <div id="map"></div>
-      <script>
-        // Initialize map
-        var map = L.map('map').setView([39.9526, -75.1652], 12); // Philly center
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-        // Load heatmap data
-        fetch('heatmap_latlng.csv')
-          .then(res => res.text())
-          .then(csvText => {
-            const points = [];
-            const rows = csvText.split("\n").slice(1);
-            rows.forEach(row => {
-              const [lng, lat] = row.split(",");
-              if (!isNaN(lat) && !isNaN(lng)) {
-                points.push([+lat, +lng, 0.5]); // Lat, Lng, Intensity
-              }
-            });
-            // Add heat layer
-            L.heatLayer(points, { radius: 25 }).addTo(map);
-          });
-      </script>
-      <div style = "padding-left: 50px;">
-        <h1> The Unexpected Dangers of Driving </h1>
-      </div>
-      <div style = "display: flex; margin-left: 20px;">
-          <div>
-              <div style = "justify-items: center;">
-                  <h3> Number of Crashes </h3>
-              </div>
-              <div>
-                  <svg id="graphs" width="600" height="425"></svg>
+    
+    <div style = "display: flex; justify-content: center; padding-bottom: 30px; padding-top: 20px;">
+      <h1> The Unexpected Dangers of Driving </h1>
+    </div>
+    <div style = "display: flex; justify-content: center;">
+      <div style = "display: flex; flex-direction:column; padding-left: 10px;">
+        <div style = "display: flex;">
+          <div style = "justify-items: center;">
+              <h3> Number of Crashes </h3>
+              <svg id="graphs" width="600" height="425"></svg>
+              <div id="linegraph_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
+              <div style = "margin-left: 50px;">
+                <label for = "year-select"> Select Year: </label>
+                <select id = "year-select"> </select>
               </div>
           </div>
-          <div>
-              <div style = "justify-items: center;">
-                  <h3> Dangerous Influences </h3>
-              </div>
-              <div>
-                  <svg id="graphs2" width="600" height="425"></svg>
-              </div>
+          <div style = "justify-items: center;">
+              <h3> Dangerous Influences </h3>
+              <svg id="graphs2" width="600" height="425"></svg>
+              <div id="barchart_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
           </div>
-      </div>
-      <div style = "margin-left: 50px;">
-          <label for = "year-select"> Select Year: </label>
-          <select id = "year-select"> </select>
-      </div>
-      <div id="barchart_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
-      <div id="linegraph_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
-      <div style = "display: flex; flex-direction: column;">
-        <div style = "justify-items: center;">
-          <h3> Crashes Time Interval </h3>
         </div>
         <div style = "display: flex;">
-          <div>
+          <div style = "justify-items: center;">
+            <h3> Crashes Time Interval </h3>
             <svg id="graph" width="600" height="425"></svg>
           </div>
-          <div>
+          <div style = "justify-items: center;">
+            <h3>Philadelphia Collision Heatmap (2019–2023)</h3>
+            <div id="map"></div>
+            <script>
+              // Initialize map
+              var map = L.map('map').setView([39.9526, -75.1652], 12); // Philly center
+              // Add OpenStreetMap tiles
+              L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+              }).addTo(map);
+              // Load heatmap data
+              fetch('heatmap_latlng.csv')
+                .then(res => res.text())
+                .then(csvText => {
+                  const points = [];
+                  const rows = csvText.split("\n").slice(1);
+                  rows.forEach(row => {
+                    const [lng, lat] = row.split(",");
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                      points.push([+lat, +lng, 0.5]); // Lat, Lng, Intensity
+                    }
+                  });
+                  // Add heat layer
+                  L.heatLayer(points, { radius: 25 }).addTo(map);
+                });
+            </script>
           </div>
         </div>
       </div>
-
-  </div>
-
-  <div id="barchart_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
-  <div id="linegraph_tooltip" style = "position: absolute; background: white; border: 1px solid; padding: 6px 10px; border-radius: 4px; pointer-events: none; font-size: 12px; display: none;"> </div>
-
-</body>
-
     </div>
   </body>
 
